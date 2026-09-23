@@ -1,15 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 
 public class Meteor : MonoBehaviour
 {
-    private CinemachineImpulseSource impulseSource;
-    void Awake()
-    {
-        impulseSource = GetComponent<CinemachineImpulseSource>();
-    }
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +32,6 @@ public class Meteor : MonoBehaviour
         } else if (whatIHit.tag == "Laser")
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().meteorCount++;
-            impulseSource.GenerateImpulse();
             Destroy(whatIHit.gameObject);
             Destroy(this.gameObject);
         }
