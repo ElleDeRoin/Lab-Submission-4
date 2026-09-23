@@ -5,20 +5,15 @@ using UnityEngine;
 public class Meteor : MonoBehaviour
 {
 
-    private void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-        //transform.Translate(Vector3.down * Time.deltaTime * 2f);
+        transform.Translate(Vector3.down * Time.deltaTime * 2f);
 
-        //if (transform.position.y < -11f)
-        //{
-        //    Destroy(this.gameObject);
-        //}
+        if (transform.position.y < -11f)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D whatIHit)
