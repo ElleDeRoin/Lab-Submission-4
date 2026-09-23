@@ -2,20 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 public class Player : MonoBehaviour
 {
     public GameObject laserPrefab;
+
 
     private float speed = 6f;
     private float horizontalScreenLimit = 10f;
     private float verticalScreenLimit = 6f;
     private bool canShoot = true;
 
+
+    private PlayerInputActions _playerInputActions;
+
+
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
-        
+        _playerInputActions = new PlayerInputActions();
+        _playerInputActions.Player.Enable();
     }
+
+
+    void OnDisable() {
+        _playerInputActions.Player.Disable();
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -24,9 +39,20 @@ public class Player : MonoBehaviour
         Shooting();
     }
 
+
     void Movement()
     {
-        transform.Translate(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed);
+
+
+        Vector2 _playerInput = _playerInputActions.Player.Movement.ReadValue<Vector2>();
+
+
+        transform.Translate(new Vector3 (_playerInput.x, _playerInput.y, 0) * Time.deltaTime * speed);
+
+
+
+
+        // transform.Translate(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed);
         if (transform.position.x > horizontalScreenLimit || transform.position.x <= -horizontalScreenLimit)
         {
             transform.position = new Vector3(transform.position.x * -1f, transform.position.y, 0);
@@ -37,15 +63,17 @@ public class Player : MonoBehaviour
         }
     }
 
+
     void Shooting()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && canShoot)
+        if (_playerInputActions.Player.Shoot.triggered && canShoot)
         {
             Instantiate(laserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             canShoot = false;
             StartCoroutine("Cooldown");
         }
     }
+
 
     private IEnumerator Cooldown()
     {
