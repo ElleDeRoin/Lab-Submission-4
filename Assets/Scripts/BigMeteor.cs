@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class BigMeteor : MonoBehaviour
 {
     private int hitCount = 0;
+    private int normalSize = 60;
+    private int bigSize = 90;
 
     // Start is called before the first frame update
     void Start()
