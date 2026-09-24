@@ -14,6 +14,18 @@ public class GameManager : MonoBehaviour
 
     private GameObject _player;
 
+    private PlayerInputActions _playerInputActions;
+
+    private void OnEnable()
+    {
+        _playerInputActions = new PlayerInputActions();
+        _playerInputActions.Player.Enable();
+    }
+    private void OnDisable()
+    {
+        _playerInputActions.Player.Disable();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,26 +41,27 @@ public class GameManager : MonoBehaviour
             CancelInvoke();
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && gameOver)
+        if (_playerInputActions.Player.Restart.triggered && gameOver)
         {
             SceneManager.LoadScene("Week5Lab");
         }
 
-        if (meteorCount == 5)
+        if (meteorCount >= 5)
         {
+            Debug.Log("where is it");
             BigMeteor();
         }
     }
 
     float minXDistanceFromPlayer()
     {
-        float minDistance = _player.transform.position.x + 2;
+        float minDistance = _player.transform.position.x;
         return minDistance;
     }
 
     float minYDistanceFromPlayer()
     {
-        float minDistance = _player.transform.position.y + 2;
+        float minDistance = _player.transform.position.y;
         return minDistance;
     }
 

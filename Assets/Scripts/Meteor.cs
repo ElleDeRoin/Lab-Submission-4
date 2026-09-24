@@ -19,12 +19,12 @@ public class Meteor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * Time.deltaTime * 2f);
+        //transform.Translate(Vector3.down * Time.deltaTime * 2f);
 
-        if (transform.position.y < -11f)
-        {
-            Destroy(this.gameObject);
-        }
+        //if (transform.position.y < -11f)
+        //{
+        //    Destroy(this.gameObject);
+        //}
     }
 
     private void OnTriggerEnter2D(Collider2D whatIHit)
@@ -37,6 +37,7 @@ public class Meteor : MonoBehaviour
         } else if (whatIHit.tag == "Laser")
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().meteorCount++;
+            Debug.Log("should be counting!");
             impulseSource.GenerateImpulse();
             Destroy(whatIHit.gameObject);
             Destroy(this.gameObject);
